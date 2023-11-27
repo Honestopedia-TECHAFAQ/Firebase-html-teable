@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Firestore Data Table</title>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+ 
+  <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-firestore.js"></script>
+  <script>
+    var firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_AUTH_DOMAIN",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_STORAGE_BUCKET",
+      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+
+    var db = firebase.firestore();
+
+    var collectionName = 'your_collection_name';
+
+    document.addEventListener('DOMContentLoaded', function () {
+      var tableBody = document.getElementById('data-table').getElementsByTagName('tbody')[0];
+
+      db.collection(collectionName).get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          var data = doc.data();
+          var row = tableBody.insertRow(-1);
+          var cell1 = row.insertCell(0);
+          var cell2 = row.insertCell(1);
+
+          cell1.textContent = data.name;
+          cell2.textContent = data.email;
+         
+        });
+      });
+    });
+  </script>
+</head>
+<body>
+
+  <h2>Firestore Data Table</h2>
+
+  <table id="data-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+     
+      </tr>
+    </thead>
+    <tbody>
+    
+    </tbody>
+  </table>
+
+</body>
+</html>
